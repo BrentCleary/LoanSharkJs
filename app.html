@@ -63,11 +63,11 @@
           <form class="bg bg-light p-2 mb-3">
             <div>
               <div class="form-label">Loan Amount:</div>
-              <input class="form-control" id="loanAmount" type="number">
+              <input class="form-control" id="balance" type="number">
             </div>
             <div>
               <div class="form-label">Payments:</div>
-              <input class="form-control" id="payments" type="number">
+              <input class="form-control" id="term" type="number">
             </div>
             <div>
               <div class="form-label">Rate:</div>
@@ -128,7 +128,7 @@
                   <th scope="col">Balance</th>
                 </tr>
               </thead>
-              <tbody id="tableData">
+              <tbody id="tableDisplay">
 
                 <!-- Insert Data Here -->
               
@@ -164,6 +164,7 @@
 
   <template id="loanTemplate">
     <tr>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
