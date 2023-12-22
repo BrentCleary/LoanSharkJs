@@ -48,7 +48,7 @@ function displayPaymentInfo(paymentObj)
   // clear table first
   tableBody.innerHTML = "";
 
-  for (let i = 0; i < fbArray.length; i += 5)
+  for (let i = 0; i < fbArray.length; i += )
   {
     let tableRow = document.importNode(templateRow.content, true);
     
