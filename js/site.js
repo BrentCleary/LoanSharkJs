@@ -11,36 +11,46 @@ function getValues()
   displayPaymentInfo(returnObj);
 }
 
-
 // Calculate Interest Rate Payments
 function calculatePayments(balance, term, rate)
 {
-
   let returnObj = {};
 
   // calulate payments here
   let principal = balance;
   let interest = (rate/1200);
-
   let monthlyPayment = ((balance * interest) / (1 - Math.pow(1 + interest, -term))).toFixed(2);
   let totalSum = (monthlyPayment * term).toFixed(2);
   let interestTotal = (totalSum - principal).toFixed(2);
 
+  returnObj.monthlyPayment = monthlyPayment;
+  returnObj.principal = principal;
+  returnObj.totalSum = totalSum;
+  returnObj.interestTotal = interestTotal;
+
   let principalPayment = 0;
-  let interestSum = 0;
+  let interestSum= 0;
   let interestPayment = 0;
 
   let paymentArray = [];
 
   for (let i = 1; i <= term; i++)
   {
-    
+    // Calculate values for monthly payments
     interestPayment = (principal * interest).toFixed(2);
     principalPayment = (monthlyPayment - interestPayment).toFixed(2);
-    interestSum = interestSum + interestPayment;
+    interestSum = (interestSum + parseFloat(interestPayment));
     principal = (principal - principalPayment).toFixed(2);
     
-    paymentArray.push([i, monthlyPayment, principalPayment, interestPayment, interestSum, principal]);
+    // Push values into paymentArray for looping over in display tables
+    paymentArray.push([
+      i, 
+      parseFloat(monthlyPayment).toFixed(2), 
+      parseFloat(principalPayment).toFixed(2), 
+      parseFloat(interestPayment).toFixed(2), 
+      interestSum.toFixed(2), 
+      parseFloat(principal).toFixed(2)
+    ]);
   }
 
   returnObj.paymentArray = paymentArray;
@@ -54,9 +64,8 @@ function displayPaymentInfo(returnObj)
   // Display Field on side panel
   document.getElementById("monthlyPayment").innerHTML = `$${returnObj.monthlyPayment}`;
   document.getElementById("principalTotal").innerHTML = `$${returnObj.principal}`;
-  document.getElementById("interestTotal").innerHTML = `$${returnObj.interestSum}`;
-  document.getElementById("costTotal").innerHTML = `$${returnObj.totalPayment}`;
-
+  document.getElementById("interestTotal").innerHTML = `$${returnObj.interestTotal}`;
+  document.getElementById("costTotal").innerHTML = `$${returnObj.totalSum}`;
 
   // Display Table
   // get the table body element from the page

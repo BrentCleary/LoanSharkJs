@@ -61,17 +61,116 @@
       <div class="row row-cols-1 row-cols-lg-2">
         <div class="col-lg-8">
           <pre class="line-numbers"><code class="language-javascript">
-            // Call Hello World
-            function helloWorld(){
-              alert("Hello World");
+            // Get Values
+            function getValues()
+            {
+              // Get Form input values
+              let balance = document.getElementById("balance").value;
+              let term = document.getElementById("term").value;
+              let rate = document.getElementById("rate").value;
+            
+              let returnObj = calculatePayments(balance, term, rate);
+            
+              displayPaymentInfo(returnObj);
             }
+            
+            // Calculate Interest Rate Payments
+            function calculatePayments(balance, term, rate)
+            {
+              let returnObj = {};
+            
+              // calulate payments here
+              let principal = balance;
+              let interest = (rate/1200);
+              let monthlyPayment = ((balance * interest) / (1 - Math.pow(1 + interest, -term))).toFixed(2);
+              let totalSum = (monthlyPayment * term).toFixed(2);
+              let interestTotal = (totalSum - principal).toFixed(2);
+            
+              returnObj.monthlyPayment = monthlyPayment;
+              returnObj.principal = principal;
+              returnObj.totalSum = totalSum;
+              returnObj.interestTotal = interestTotal;
+            
+              let principalPayment = 0;
+              let interestSum= 0;
+              let interestPayment = 0;
+            
+              let paymentArray = [];
+            
+              for (let i = 1; i <= term; i++)
+              {
+                // Calculate values for monthly payments
+                interestPayment = (principal * interest).toFixed(2);
+                principalPayment = (monthlyPayment - interestPayment).toFixed(2);
+                interestSum = (interestSum + parseFloat(interestPayment));
+                principal = (principal - principalPayment).toFixed(2);
+                
+                // Push values into paymentArray for looping over in display tables
+                paymentArray.push([
+                  i, 
+                  parseFloat(monthlyPayment).toFixed(2), 
+                  parseFloat(principalPayment).toFixed(2), 
+                  parseFloat(interestPayment).toFixed(2), 
+                  interestSum.toFixed(2), 
+                  parseFloat(principal).toFixed(2)
+                ]);
+              }
+            
+              returnObj.paymentArray = paymentArray;
+            
+              return returnObj;
+            }
+            
+            // Display Payment Info
+            function displayPaymentInfo(returnObj)
+            {
+              // Display Field on side panel
+              document.getElementById("monthlyPayment").innerHTML = `$${returnObj.monthlyPayment}`;
+              document.getElementById("principalTotal").innerHTML = `$${returnObj.principal}`;
+              document.getElementById("interestTotal").innerHTML = `$${returnObj.interestTotal}`;
+              document.getElementById("costTotal").innerHTML = `$${returnObj.totalSum}`;
+            
+              // Display Table
+              // get the table body element from the page
+              let tableBody = document.getElementById("tableDisplay");
+              // get the template cell
+              let templateRow = document.getElementById("loanTemplate");
+              // clear table first
+              tableBody.innerHTML = "";
+            
+              // create and instance of the row for every month of the term
+              for (let i = 0; i < returnObj.paymentArray.length ; i++)
+              {
+                // import that table row template
+                let tableRow = document.importNode(templateRow.content, true);
+                // grab just the <td> to put into an array
+                let rowCols = tableRow.querySelectorAll("td");
+            
+                rowCols[0].textContent = returnObj.paymentArray[i][0];
+                rowCols[1].textContent = returnObj.paymentArray[i][1];
+                rowCols[2].textContent = returnObj.paymentArray[i][2];
+                rowCols[3].textContent = returnObj.paymentArray[i][3];
+                rowCols[4].textContent = returnObj.paymentArray[i][4];
+                rowCols[5].textContent = returnObj.paymentArray[i][5];
+            
+                tableBody.appendChild(tableRow);
+              }
+            
+            }
+            
           </code>
           </pre>
         </div>
         <div class="col-lg-4">
           <img src="img/LoanSharkAppImage.jpg" class="img-fluid center-block d-block mx-auto" alt="Name Logo Holder">
           <h5>Loan Shark</h5>
-          <p>Hello World is a function that displays an alert with a message of "Hello World"</p>
+          <p>Loan Shark is an App that takes in the principal, term and interest on a user's loan, and displays the payments and interest on a monthly basis back, along with the total cost and interest payment.</p>
+          <h5>Step 1</h5>
+          <p>The getValues() method captures the principal, loan term (# of months) and interest rate %.</p>
+          <h5>Step 2</h5>
+          <p>The calculatePayments() method then calculates the monthlyPayment, totalSum, and interest total. The values are passed into a for-loop, which iterates once for each month of the term. Values for payment to Principal, Interest, Total Interest and remaining Balance are calculated and stored in a paymentArray[], which is stored in a returnObj (return Object), which gets passed to the displayPaymentInfo() method.</p>
+          <h5>Step 3</h5>
+          <p>The displayPaymentInfo() method calls on a loanTemplate, and loops over the table rows (<tr>), inserting the corresponding values from paymentArray[], and appended into the table body of the selected "id"</p>
         </div>
       </div>
     </div>

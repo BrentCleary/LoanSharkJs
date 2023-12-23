@@ -52,6 +52,7 @@
           </div>
       </div>
   </nav>
+  
   <!-- ====== MAIN SECTION ====== -->
   <main class="flex-shrink-0">
     <div class="container">
@@ -74,7 +75,7 @@
               <input class="form-control" value="5" id="rate" type="number">
             </div>
             <div class="d-flex justify-content-end">
-              <button class="btn btn-dark mt-2" type="submit" id="btnSubmit">Calculate</button>
+              <button class="btn btn-dark mt-2" type="button" id="btnSubmit">Calculate</button>
             </div>
           </form>
         </div>
@@ -98,15 +99,15 @@
               </tr>
               <tr>
                 <td class="row">Total Principal</td>
-                <td id="principalTotal">0.00</td>
+                <td class="text-end" id="principalTotal">0.00</td>
               </tr>
               <tr>
                 <td class="row">Total Interest</td>
-                <td id="interestTotal">0.00</td>
+                <td class="text-end" id="interestTotal">0.00</td>
               </tr>
               <tr>
                 <td class="row d-flex justify-content-start">Total Cost</td>
-                <td id="costTotal">0.00</td>
+                <td class="text-end" id="costTotal">0.00</td>
               </tr>
             </tbody>
           </table>
@@ -124,7 +125,7 @@
                   <th scope="col">Payment</th>
                   <th scope="col">Principal</th>
                   <th scope="col">Interest</th>
-                  <th scope="col">Total Investment</th>
+                  <th scope="col">Total Interest</th>
                   <th scope="col">Balance</th>
                 </tr>
               </thead>
@@ -164,12 +165,12 @@
 
   <template id="loanTemplate">
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td step="0.01"></td>
+      <td step="0.01"></td>
+      <td step="0.01"></td>
+      <td step="0.01"></td>
+      <td step="0.01"></td>
+      <td step="0.01"></td>
     </tr>
   </template>
 
