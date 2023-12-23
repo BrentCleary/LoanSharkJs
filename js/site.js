@@ -6,9 +6,9 @@ function getValues()
   let term = document.getElementById("term").value;
   let rate = document.getElementById("rate").value;
 
-  let paymentObj = calculatePayments(balance, term, rate);
+  let returnObj = calculatePayments(balance, term, rate);
 
-  displayPaymentInfo(paymentObj);
+  displayPaymentInfo(returnObj);
 }
 
 
@@ -22,65 +22,59 @@ function calculatePayments(balance, term, rate)
   returnObj.term = term;
   returnObj.rate = rate;
 
-  returnObj.payment;
 
+  returnObj.principal = balance;
 
-  for (let i = returnObj.balance; i >= 0; i - returnObj.payment)
-  {
-  
-    
+  returnObj.interest = (rate/1200);
+  returnObj.monthlyPayment = ((balance * returnObj.interest) / (1 - Math.pow(1 + returnObj.interest, -term))).toFixed(2);
 
-  // principal payment per month
-  returnObj.principalPayment = balance / term; 
-  // interest per month
-  returnObj.monthlyInterest = balance * rate / 1200;
-  // Total Interest
-  returnObj.totalInterest = returnObj.monthlyInterest * term;
-  // Total Payment
-  returnObj.totalPayment = balance + returnObj.totalInterest;
-  // total per month
-  returnObj.totalMonthPayment = (balance * (rate / 1200)) / ((1 + rate/1200)^term)
+  returnObj.totalPayment = (returnObj.monthlyPayment * term).toFixed(2);
+  returnObj.totalInterest = (returnObj.totalPayment - returnObj.principal).toFixed(2);
 
-
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i];
     
   }
+
+
 
 
   return returnObj;
 }
 
 // Display Payment Info
-function displayPaymentInfo(paymentObj)
+function displayPaymentInfo(returnObj)
 {
+  // Display Field on side panel
+  document.getElementById("monthlyPayment").innerHTML = `$${returnObj.monthlyPayment}`;
+  document.getElementById("principalTotal").innerHTML = `$${returnObj.principal}`;
+  document.getElementById("interestTotal").innerHTML = `$${returnObj.totalInterest}`;
+  document.getElementById("costTotal").innerHTML = `$${returnObj.totalPayment}`;
+
+
+  // Display Table
   // get the table body element from the page
   let tableBody = document.getElementById("tableDisplay");
-
   // get the template cell
   let templateRow = document.getElementById("loanTemplate");
 
   // clear table first
   tableBody.innerHTML = "";
 
-  for (let i = 0; i < term; i += 6)
+  // create and instance of the row for every month of the term
+  for (let i = 1; i <= returnObj.term; i++)
   {
+    // import that table row template
     let tableRow = document.importNode(templateRow.content, true);
     
     // grab just the <td> to put into an array
     let rowCols = tableRow.querySelectorAll("td");
-    rowCols[0].classList.add(fbArray[i]);
-    rowCols[0].textContent = fbArray[i];
-
-    rowCols[1].classList.add(fbArray[i+1]);
-    rowCols[1].textContent = fbArray[i+1];
-    
-    rowCols[2].classList.add(fbArray[i+2]);
-    rowCols[2].textContent = fbArray[i+2];
-    
-    rowCols[3].classList.add(fbArray[i+3]);
-    rowCols[3].textContent = fbArray[i+3];
-    
-    rowCols[4].classList.add(fbArray[i+4]);
-    rowCols[4].textContent = fbArray[i+4];
+    rowCols[0].textContent = i;
+    rowCols[1].textContent = returnObj.monthlyPayment;
+    rowCols[2].textContent = returnObj.monthlyPayment - returnObj.interest;
+    rowCols[3].textContent = 0;
+    rowCols[4].textContent = 0;
+    rowCols[5].textContent = 0;
 
     tableBody.appendChild(tableRow);
   }

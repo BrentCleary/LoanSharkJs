@@ -63,15 +63,15 @@
           <form class="bg bg-light p-2 mb-3">
             <div>
               <div class="form-label">Loan Amount:</div>
-              <input class="form-control" id="balance" type="number">
+              <input class="form-control" value="20000" id="balance" type="number">
             </div>
             <div>
               <div class="form-label">Payments:</div>
-              <input class="form-control" id="term" type="number">
+              <input class="form-control" value= 60 id="term" type="number">
             </div>
             <div>
               <div class="form-label">Interest Rate %:</div>
-              <input class="form-control" id="rate" type="number">
+              <input class="form-control" value="5" id="rate" type="number">
             </div>
             <div class="d-flex justify-content-end">
               <button class="btn btn-dark mt-2" type="submit" id="btnSubmit">Calculate</button>
@@ -85,7 +85,7 @@
             Your Monthly Payments
           </div>
           <div class="display-1 text-center m-3" id="paymentDisplay">
-            <div class="display-5" id="interestMonthly">
+            <div class="display-5" id="monthlyPayment">
               0.00
               <!-- Insert Monthly Payment Here -->
             </div>
@@ -98,15 +98,15 @@
               </tr>
               <tr>
                 <td class="row">Total Principal</td>
-                <td id="principalTotal">9</td>
+                <td id="principalTotal">0.00</td>
               </tr>
               <tr>
                 <td class="row">Total Interest</td>
-                <td id="interestTotal">9</td>
+                <td id="interestTotal">0.00</td>
               </tr>
               <tr>
-                <td class="row">Total Cost</td>
-                <td id="costTotal">9</td>
+                <td class="row d-flex justify-content-start">Total Cost</td>
+                <td class="font-weight-bold d-flex justify-content-end" id="costTotal">0.00</td>
               </tr>
             </tbody>
           </table>
